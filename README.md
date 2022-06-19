@@ -65,7 +65,7 @@ signal_generator = sg.SignalGenerator(
     fadeIn=fade_in,
     fadeOut=fade_out,
 )
-testSignal = signalGenerator()
+testSignal = signal_generator()
 ```
 
 ## Dependencies
