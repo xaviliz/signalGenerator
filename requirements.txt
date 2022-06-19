@@ -1,0 +1,4 @@
+matplotlib
+more_termcolor 
+numpy
+scipy
