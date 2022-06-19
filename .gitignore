@@ -171,7 +171,6 @@ Training
 Blog
 About
 
-# Custom 
-data/audio/
-__pycache__/
+# Custom directories
+data/*
 .DS_Store
