@@ -50,23 +50,20 @@ sine_train = signal_generator()
 amplitude = 1
 duration = 10
 sample_rate = 44100
-signalType = "lin_ramp"
-fadeIn = 0.0
-fadeOut = 0.0
-checkDirectory([audioDataDir, plotDir])
+signal_type = "lin_ramp"
+fade_in = 0.0
+fade_out = 0.0
+logger = sg.getLogger(level="DEBUG")
 
 # synthesize signal
-signalGenerator = SignalGenerator(
-    signalType,
+signal_generator = sg.SignalGenerator(
+    signal_type,
     duration,
     amplitude=amplitude,
     sampleRate=sample_rate,
-    nHarmonics=20,
-    nCycles=1,
-    cycleAttenuation=3,
     logger=logger,
-    fadeIn=fadeIn,
-    fadeOut=fadeOut,
+    fadeIn=fade_in,
+    fadeOut=fade_out,
 )
 testSignal = signalGenerator()
 ```
