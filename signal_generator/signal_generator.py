@@ -1,7 +1,7 @@
 # TODO: get stft and istft function or install librosa in python9
-#from librosa.core import stft, istft
-#from librosa.util import fix_length
-from cgi import test
+# from librosa.core import stft, istft
+# from librosa.util import fix_length
+from __future__ import division
 import logging
 import math
 import matplotlib.pyplot as plt
@@ -9,9 +9,7 @@ import numpy as np
 from pathlib import Path
 from scipy.io.wavfile import write as writeWavFile
 from scipy.signal.windows import hann, hanning, blackman
-import sys
 from more_termcolor import colored
-
 
 
 ##############################################################################
@@ -96,8 +94,7 @@ class SignalGenerator:
         testSignal = self.generateTestSignal()
         # apply fades
         # print(self.windowIn.shape)
-        
-        
+
         # if self.fadeInSamples + self.fadeOutSamples < self.nSamples:
         #     self.logger.debug(
         #         f"testSignal.shape: {testSignal.shape} self.windowIn.shape: {self.windowIn.shape}"
@@ -116,8 +113,7 @@ class SignalGenerator:
         #     self.logger.warning(
         #         "Cannot apply fades because the total fade duration is longer than total duration."
         #     )
-            
-            
+
         # Apply cycles (repetitions) and silences
         pind = 0
         for n in np.arange(1, self.nCycles + 1):
@@ -199,10 +195,10 @@ class SignalGenerator:
         for i in np.arange(self.nHarmonics):
             n = 2 * i + 1
             sine = (
-                ((-1.0) ** i) * (n ** -2.0) * self.generateSine(1, self.frequency * n)
+                ((-1.0) ** i) * (n**-2.0) * self.generateSine(1, self.frequency * n)
             )
             output += sine
-        return 8.0 / np.pi ** 2 * output
+        return 8.0 / np.pi**2 * output
 
     def generateSquareWaveAlias(self):
         pass
@@ -231,7 +227,7 @@ class SignalGenerator:
     def generateWhiteNoise(self):
         return np.random.uniform(low=-1, size=len(self.timeStamps))
 
-# TODO: get stft and istft function or install librosa in python9
+    # TODO: get stft and istft function or install librosa in python9
     # def generateColoredNoise(self):
     #     nFFT = 2048
     #     N = int(self.duration * self.sampleRate)
@@ -346,7 +342,7 @@ class SignalGenerator:
         ampStep = np.abs(amplitudeRange) / self.nSamples
         logSweep = np.zeros(shape=(self.nSamples,), dtype=np.float64)
         for i in range(1, self.nSamples):
-            f = 2.0 ** nf
+            f = 2.0**nf
             phase = (phase + 2 * np.pi * f / self.sampleRate) % (2 * np.pi)
             logSweep[i] = amp * np.sin(phase)
             nf = nf + step
@@ -489,47 +485,6 @@ def sine(sample_rate: int, duration: float, amplitude: float, frequency: float =
 ##############################################################################
 
 
-# def generateSineTestSignal(sampleRate=16000):
-#     testSignal = np.zeros(shape=(1 * sampleRate,), dtype=np.float64)
-#     startIndex = 0
-#     frequency = 100
-#     period = getPeriod(frequency)
-#     # get nCycles in 0.25s for 1kHz-sinewave
-#     duration, nSamples, _ = redefineDurationToPeriod(0.25, period, sampleRate)
-#     testSignal[startIndex:nSamples] = sineGenerator(
-#         0.5, frequency, sampleRate, duration
-#     )
-#     startIndex += nSamples
-#     # generate signal and add to testSignal
-#     duration, nSamples, _ = redefineDurationToPeriod(0.1, period, sampleRate)
-#     testSignal[startIndex : startIndex + nSamples] = sineGenerator(
-#         1.0, frequency, sampleRate, duration
-#     )
-#     startIndex += nSamples
-#     # generate signal2
-#     frequency = 50
-#     period = getPeriod(frequency)
-#     duration, nSamples, _ = redefineDurationToPeriod(0.15, period, sampleRate)
-#     testSignal[startIndex : startIndex + nSamples] = sineGenerator(
-#         1.0, frequency, sampleRate, duration
-#     )
-#     startIndex += nSamples
-#     # generate signal3
-#     duration, nSamples, _ = redefineDurationToPeriod(0.25, period, sampleRate)
-#     testSignal[startIndex : startIndex + nSamples] = sineGenerator(
-#         0.5, frequency, sampleRate, duration
-#     )
-#     startIndex += nSamples
-#     # generate signal4
-#     testSignal[startIndex : startIndex + nSamples] = sineGenerator(
-#         2.0, frequency, sampleRate, duration
-#     )
-#     return testSignal, sampleRate
-
-
-##############################################################################
-
-
 def sweep_tone(
     sample_rate: int,
     duration: float,
@@ -538,7 +493,7 @@ def sweep_tone(
     f2: float = 20000,
     fade_duration: float = 0.0,
     inverse: bool = False,
-)-> np.ndarray:
+) -> np.ndarray:
     """
     Generate a sweep tone signal with specific parameters.
 
