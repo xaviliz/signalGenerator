@@ -96,24 +96,28 @@ class SignalGenerator:
         testSignal = self.generateTestSignal()
         # apply fades
         # print(self.windowIn.shape)
-        if self.fadeInSamples + self.fadeOutSamples < self.nSamples:
-            self.logger.debug(
-                f"testSignal.shape: {testSignal.shape} self.windowIn.shape: {self.windowIn.shape}"
-            )
-            testSignal[: self.fadeInSamples] = (
-                self.windowIn * testSignal[: self.fadeInSamples]
-            )
-            self.logger.debug(
-                f"testSignal.shape: {testSignal.shape}, self.windowIn.shape: {self.windowIn.shape}"
-            )
-            self.logger.debug(self.nSamples)
-            testSignal[self.nSamples - self.fadeOutSamples :] = (
-                self.windowOut * testSignal[self.nSamples - self.fadeOutSamples :]
-            )
-        else:
-            self.logger.warning(
-                "Cannot apply fades because the total fade duration is longer than total duration."
-            )
+        
+        
+        # if self.fadeInSamples + self.fadeOutSamples < self.nSamples:
+        #     self.logger.debug(
+        #         f"testSignal.shape: {testSignal.shape} self.windowIn.shape: {self.windowIn.shape}"
+        #     )
+        #     testSignal[: self.fadeInSamples] = (
+        #         self.windowIn[:] * testSignal[: self.fadeInSamples]
+        #     )
+        #     self.logger.debug(
+        #         f"testSignal.shape: {testSignal.shape}, self.windowIn.shape: {self.windowIn.shape}"
+        #     )
+        #     self.logger.debug(self.nSamples)
+        #     testSignal[self.nSamples - self.fadeOutSamples :] = (
+        #         self.windowOut * testSignal[self.nSamples - self.fadeOutSamples :]
+        #     )
+        # else:
+        #     self.logger.warning(
+        #         "Cannot apply fades because the total fade duration is longer than total duration."
+        #     )
+            
+            
         # Apply cycles (repetitions) and silences
         pind = 0
         for n in np.arange(1, self.nCycles + 1):
@@ -297,7 +301,7 @@ class SignalGenerator:
         return samples
 
     def generatePulse(self):
-        samples = np.ones((self.nSamples, 1), dtype=np.float64)
+        samples = np.ones((self.nSamples), dtype=np.float64)
         samples[0] = 0.0
         samples[-1] = 0.0
         return samples
@@ -622,7 +626,7 @@ if __name__ == "__main__":
     amplitude = 1
     duration = 10
     sample_rate = 44100
-    signalType = "lin_ramp"
+    signalType = "pulse"
     fadeIn = 0.0
     fadeOut = 0.0
     checkDirectory([audioDataDir, plotDir])
